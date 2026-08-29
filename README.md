@@ -1,6 +1,6 @@
 # IP as Logo
 
-`ip-as-logo` is a compact Agent Skill for generating extremely simple, cute, company-ready IP mascots. It prioritizes lovable character appeal, bold rounded silhouettes, strict complexity limits, a dominant lower-corner composition, and a solid named background color.
+`ip-as-logo` is a compact Agent Skill for generating extremely simple, cute, company-ready IP marks across five subject classes: creatures, objects, letterforms and numerals, geometric marks, and symbols. It prioritizes lovable character appeal, bold rounded silhouettes, strict complexity limits, a dominant lower-corner composition, and a solid named background color.
 
 It follows the open Agent Skills format and is designed to work with any compatible AI agent, rather than being tied to a specific agent product.
 
@@ -15,7 +15,8 @@ You can also browse the free [IP as Logo Skill website](https://ipaslogo.com), a
 - One dominant silhouette built from roughly 4–7 large basic shapes
 - Three semantic colors by default: two IP base colors plus one background color
 - Three proposed directions followed by six independently generated candidates after user approval
-- Familiar, broadly appealing animals as the default open-ended subject; objects, machines, fantasy artifacts, and obscure creatures require a clear product reason
+- Five subject classes sharing one visual system: creatures, objects, letterforms and numerals, geometric marks, and symbols, with a curated catalog in `references/subject-catalog.md`
+- Familiar animals as the anchor for open-ended mascot requests, with product-relevant objects, brand-initial letterforms, geometric marks, and symbols as first-class directions whenever they map to the product
 - Context-aware, clearly separated subject colors and gently muted, slightly lower-saturation backgrounds with barely-there neo-skeuomorphic depth, described without percentages or prescribed gradient and shading formulas
 - Thick, rounded forms without sharp or fragile details
 - A large, visually dominant IP emerging flexibly from the lower-left or lower-right, without prescribing a fixed crop
@@ -25,19 +26,33 @@ You can also browse the free [IP as Logo Skill website](https://ipaslogo.com), a
 - Image-only generation prompts that never reveal logo, brand-mark, app-icon, or icon-asset use
 - One-pass batch generation that preserves and delivers every returned image without filtering or automatic retries
 
+## Subject classes
+
+Every class shares the same canvas, three-semantic-color system, corner-emergence composition, and cute rounded shape language. `references/subject-catalog.md` lists roughly 415 proven subjects across the five classes, organized by product domain.
+
+| Class | Examples | Default face |
+| --- | --- | --- |
+| Creatures | fox, owl, octopus, ghost, robot | Always personified |
+| Objects | rocket, open book, coffee mug, camera, key | Tiny face; faceless on request |
+| Letterforms & numerals | `A–Z`, `0–9`, brand initial first | Tiny face; faceless on request |
+| Geometric marks | circle, squircle, hexagon, blob, crescent | Tiny face; faceless on request |
+| Symbols | heart, star, lightning bolt, shield, speech bubble | Tiny face; faceless on request |
+
 ## Install
 
 Install the complete skill with the Agent Skills CLI:
 
 ```bash
-npx skills@latest add s1dashu/ip-as-logo-skill
+npx skills@latest add t1seo/minimal-logo-skill
 ```
 
 The installer detects the repository's root `SKILL.md`, lets you choose a supported coding agent, and installs the complete `ip-as-logo` directory, including its supporting assets. Use `--global` for a personal installation available across projects:
 
 ```bash
-npx skills@latest add s1dashu/ip-as-logo-skill --global
+npx skills@latest add t1seo/minimal-logo-skill --global
 ```
+
+This repository is a fork of [s1dashu/ip-as-logo-skill](https://github.com/s1dashu/ip-as-logo-skill) that expands the subject space from animal-first mascots to the five subject classes above.
 
 ## Agent compatibility
 
@@ -51,11 +66,20 @@ Ask your AI agent for an IP mascot image, for example:
 Create a very simple, cute rounded ghost IP character on a solid deep navy background.
 ```
 
+Objects, letterforms, geometric shapes, and symbols work the same way:
+
+```text
+Create a very simple, cute rounded rocket IP character on a solid dusk purple background.
+Create a cute rounded letter B character for our brand initial on a solid sage green background.
+Create a cute rounded hexagon character on a solid warm sand background.
+Create a faceless heart mark on a solid soft coral background.
+```
+
 The skill does not ask for a color-mode choice by default. Every default candidate uses three semantic colors: two IP base colors plus one background color. It no longer reserves any fraction of the candidate set for two-color images. A two-color image is generated only when the user explicitly requests it, and then uses background-colored negative space for facial marks rather than introducing a third color.
 
-When the user already names an IP subject, the skill proposes three controlled design treatments of that subject. When the subject is open, it proposes familiar animal mascots first and ties each to a product attribute or brand promise. In open-ended batches, 95–100% of candidates should be familiar animals; non-animal subjects are limited to a small minority with a direct product connection, never used merely to manufacture novelty.
+When the user already names an IP subject — an animal, an object like a rocket or coffee mug, a letter, a digit, a geometric shape, or a symbol — the skill proposes three controlled design treatments of that subject. When the subject is open, it proposes three genuinely different directions and draws them from more than one subject class when the product context supports it: typically one familiar animal mascot, one product-relevant object or symbol, and one brand-initial letterform or geometric mark. Every direction is tied to a product attribute or brand promise, never chosen to manufacture novelty.
 
-Large batches create variety within commercially plausible animal mascots through species or breed, ear and muzzle proportions, expression, lower-left versus lower-right emergence, crop, silhouette, and secondary color organization. Clocks, locks, industrial tools, measuring instruments, vehicles, abstract machines, fantasy artifacts, and obscure creatures are not default company mascots.
+Large batches create variety through species or subject choice, proportions, expression, lower-left versus lower-right emergence, crop, silhouette, and secondary color organization. Objects, letterforms, geometric marks, and symbols follow the same cute rounded visual system as animal mascots: personified with a tiny face by default, faceless only on explicit request. The curated subject space in `references/subject-catalog.md` spans roughly 415 subjects across the five classes.
 
 If the skill runs inside a product repository, it inspects relevant read-only context before asking questions. If product context is insufficient, it asks one consolidated round of background questions. Once context is sufficient, it always presents three concise directions and proposes generating six independent images. It proceeds after the user agrees, or immediately when the user has already explicitly authorized six outputs.
 
@@ -75,12 +99,13 @@ Generation is intentionally treated as a creative draw. Each requested candidate
 
 ```text
 SKILL.md
+references/subject-catalog.md
 assets/ip-as-logo-wall.webp
 README.md
 LICENSE
 ```
 
-The skill itself intentionally consists of a single instruction document. The repository also includes the showcase image above, but no scripts, style references, or generation dependencies.
+The skill consists of a single instruction document plus one curated subject catalog that the agent consults when proposing directions. The repository also includes the showcase image above, but no scripts, style references, or generation dependencies.
 
 ## Model behavior
 

@@ -1,11 +1,11 @@
 ---
 name: ip-as-logo
-description: Generate extremely simple, cute, personified square character images with rounded heavy forms, two purposeful character colors, one solid background color, and a dominant lower-corner composition. Use when creating an animal, creature, robot, ghost, plant, object, or other character image, including when the agent should infer three product-relevant directions and propose six independent candidates for approval.
+description: Generate extremely simple, cute, personified square character images with rounded heavy forms, two purposeful character colors, one solid background color, and a dominant lower-corner composition. Use when creating an animal, creature, robot, ghost, plant, object, letterform, numeral, geometric mark, symbol, or other character image, including when the agent should infer three product-relevant directions and propose six independent candidates for approval.
 ---
 
 # IP as Logo
 
-Create the simplest possible cute IP character: a compact, lovable symbol that remains recognizable at `32 × 32`, not a detailed character illustration.
+Create the simplest possible cute IP character: a compact, lovable symbol that remains recognizable at `32 × 32`, not a detailed character illustration. The subject may be a living creature, an everyday object, a single letterform or numeral, a geometric mark, or a familiar symbol; the Subject classes section below adapts the shared system to each class.
 
 ## Workflow
 
@@ -15,7 +15,7 @@ Create the simplest possible cute IP character: a compact, lovable symbol that r
 4. Once context is sufficient, always present three concise directions before generation and explicitly propose generating six independent candidates in one batch. Do not generate until the user agrees, unless the current request already explicitly authorizes six outputs or asks the agent to proceed without another confirmation.
 5. Choose the three proposed directions deliberately:
    - When the user explicitly specifies an IP subject, keep that subject and propose three distinct design treatments based on silhouette treatment, secondary color region, defining feature, or personality emphasis.
-   - When the user does not specify an IP subject, propose three genuinely different IP subjects or metaphors. Tie each one to a different product attribute or brand promise; do not return three arbitrary animals with no rationale.
+   - When the user does not specify an IP subject, propose three genuinely different IP subjects or metaphors, and draw them from more than one subject class when the product context supports it: for example one familiar animal mascot, one product-relevant object or symbol, and one letterform of the brand initial or one geometric mark. Tie each direction to a different product attribute or brand promise; do not return three arbitrary subjects with no rationale. Consult `references/subject-catalog.md` for proven subjects in every class.
 6. Interpret the user's response exactly:
    - If the user accepts all three directions and the six-image proposal, generate two independent variants per direction and label them `A1`, `A2`, `B1`, `B2`, `C1`, and `C2`. Assign `A1`, `B1`, and `C1` to the lower-left and `A2`, `B2`, and `C2` to the lower-right so every direction is tested once from each side.
    - If the user selects one direction but accepts six images, generate six controlled variants of that direction and label them `A1` through `A6`. Assign odd-numbered variants to the lower-left and even-numbered variants to the lower-right.
@@ -31,11 +31,33 @@ Create the simplest possible cute IP character: a compact, lovable symbol that r
 
 When proposing directions before generation, describe each in one compact line: `<IP subject> — <product connection> — <defining silhouette>`. End with a direct proposal to generate six images using the distribution above. Do not turn the discovery phase into a long branding workshop unless the user asks for one.
 
+## Subject classes
+
+The skill supports five subject classes. Every class shares the same canvas, three-semantic-color system, corner-emergence composition, complexity discipline, and cute rounded shape language; the rules below adapt that shared system to each class.
+
+- **Creatures** — animals, fantasy creatures, robots, ghosts, and plants. The anchor class for open-ended mascot requests. Always personified with the standard face.
+- **Objects** — everyday and product-relevant things such as a rocket, open book, coffee mug, camera, lightbulb, key, padlock, gear, or game controller. A first-class choice whenever the object maps to the product function or category; that mapping alone is sufficient justification. Personified with a tiny face by default; generate a faceless object mark only when the user asks for one.
+- **Letterforms and numerals** — one uppercase letter `A–Z` or one digit `0–9`, typically the brand initial, or a tight two-character pair on explicit request. Build the glyph itself as the single heavy rounded silhouette. Personified with a tiny face by default; faceless on request.
+- **Geometric marks** — one circle, ring, triangle, square, squircle, diamond, hexagon, blob, crescent, or a compact stack of two or three such shapes. Personified by default; faceless on request.
+- **Symbols** — broadly recognized signs such as a heart, star, lightning bolt, upward arrow, cloud, shield, crown, drop, flame, leaf, moon, chat bubble, play mark, infinity loop, or check mark. Personified by default; faceless on request.
+
+Class-specific rules:
+
+- Generalize the species-defining feature to one identity-defining feature per subject: one nozzle flame for a rocket, one steam wisp for a mug, one keyhole for a padlock, one stem for an apple, one loop crossing for an infinity mark.
+- For letterforms and numerals, keep the glyph legible first: prefer simple single-story forms, keep every counter open and clearly readable, never let a face, crop, or rounding close or distort a stroke that recognition depends on, and never add serifs or thin strokes.
+- For letterforms, numerals, geometric marks, and symbols, cropping at the emergence corner must never remove a stroke, counter, point, or lobe that recognition depends on; when in doubt keep the whole glyph or symbol visible while still anchoring it to the assigned corner.
+- For geometric marks and symbols whose identity is the silhouette itself, the complexity floor relaxes: one to four large shapes may be enough. The `4–7` budget remains an upper discipline, never a minimum to fill.
+- Symmetric, centered-feeling subjects such as a heart, circle, or letterform still follow the default corner-emergence composition; center them only on explicit request.
+- A faceless mark must read through the silhouette and the two color masses alone. When the user asks for faceless, omit the eye-and-mouth language from the prompt entirely rather than describing an empty face, and describe the subject as a mark rather than a character.
+- The paired-features rule applies to paired anatomy on creatures and paired structural elements on objects, such as two headphone cups or two scale pans; it imposes nothing on glyphs, geometric marks, or symbols without paired parts.
+
+When proposing subjects in any class, consult `references/subject-catalog.md` for proven, broadly recognizable options organized by class and product domain.
+
 ## Complexity budget
 
 - Build one dominant continuous outer silhouette from roughly `4–7` large basic geometric shapes. Merge or delete any shape that does not carry identity, expression, or recognition.
-- Use at most one species-defining feature: for example, one large pouch beak, one pair of curled horns, or one broad visor.
-- Use at most two broad internal color regions corresponding to the two IP base colors. Keep the face to two eyes and, only when needed for the expression, one tiny mouth. Omit eyebrows, highlights, nostrils, texture, outlines, and decorative marks unless essential for recognition.
+- Use at most one identity-defining feature: for example, one large pouch beak, one pair of curled horns, one broad visor, one nozzle flame, or one keyhole.
+- Use at most two broad internal color regions corresponding to the two IP base colors. Keep the face to two eyes and, only when needed for the expression, one tiny mouth; omit the face entirely only for an explicitly requested faceless mark. Omit eyebrows, highlights, nostrils, texture, outlines, and decorative marks unless essential for recognition.
 - Remove repeated feathers, scales, fur tufts, armor plates, buttons, screws, numbers, labels, and other illustrative detail.
 - Make simplification, cuteness, and an endearing baby-like personality the decisive qualities. Favor a large head, compact proportions, soft cheeks, widely spaced simple eyes, and a calm friendly expression when appropriate to the subject.
 - Require a readable black silhouette and recognizability at `32 × 32`. If a feature disappears or becomes noise at that size, enlarge, merge, or remove it.
@@ -104,6 +126,15 @@ Style: make simplification, cuteness, and lovable baby-like appeal the strongest
 Finish: show only the character on the full-canvas background, with clean surfaces and normal square outer corners.
 Constraints: Use no text or watermark. Add no borders, frames, cards, or presentation masks. Include one character only, with no extra subjects or scenery. Use no fragile lines, sharp tips, unnecessary outlines, tiny details, or decorative marks. Add no photorealistic material, dramatic bevel, glossy hotspot, deep occlusion, extrusion, strong three-dimensional rendering, or external cast shadow. Keep the background solid and uniform, with no texture, vignette, or lighting variation.
 ```
+
+### Class-specific prompt adjustments
+
+Adapt only the `Subject:` and `Complexity:` lines to the subject class and keep every other line unchanged:
+
+- For a creature or a personified object, use the lines as written.
+- For a personified letterform or numeral, replace the `Subject:` line with: `Subject: place one extremely simplified, cute uppercase letter <X> character on the background, built as one heavy continuous rounded glyph with soft blunt terminals, keeping the letterform clearly legible.` Append to the `Complexity:` line: `Keep every counter of the glyph open and readable; add no serifs or thin strokes.` Use the equivalent digit wording for a numeral. The no-text constraint forbids incidental writing, not this single requested glyph.
+- For a personified geometric mark or symbol, replace `<subject>` with the named shape or symbol and state that the silhouette itself is the shape, for example: `one extremely simplified, cute, softly rounded heart character whose whole silhouette is the heart`. When one to four shapes are enough, state that count in the `Complexity:` line instead of `4–7`.
+- For an explicitly requested faceless mark in any class, remove the eye-and-mouth sentence from the `Complexity:` line and describe the subject as a mark rather than a character; keep all other lines, including the subtle-depth sentence.
 
 ## Delivery behavior
 
